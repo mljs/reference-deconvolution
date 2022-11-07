@@ -1,6 +1,7 @@
 {
   "name": "ml-reference-deconvolution",
   "version": "0.0.0",
+  "private": true,
   "description": "Reference deconvolution",
   "main": "./lib/index.js",
   "module": "./lib-esm/index.js",
