@@ -1,5 +1,5 @@
 {
-  "name": "ml-ml-reference-deconvolution",
+  "name": "ml-reference-deconvolution",
   "version": "0.0.0",
   "description": "Reference deconvolution",
   "main": "./lib/index.js",

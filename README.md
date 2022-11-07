@@ -9,14 +9,26 @@ Reference deconvolution.
 
 ## Installation
 
-`$ npm i ml-ml-reference-deconvolution`
+`$ npm i ml-reference-deconvolution`
+
+## Reference
+
+https://doi.org/10.1002/(SICI)1099-0534(2000)12:1<21::AID-CMR4>3.0.CO;2-R
 
 ## Usage
 
 ```js
-import { myModule } from 'ml-ml-reference-deconvolution';
+import { referenceDeconvolution } from 'ml-reference-deconvolution';
 
-const result = myModule(args);
+const result = referenceDeconvolution(
+  { x, y },
+  { from, to },
+  {
+    shape: {
+      kind: 'gaussian',
+    },
+  },
+);
 // result is ...
 ```
 
@@ -24,11 +36,11 @@ const result = myModule(args);
 
 [MIT](./LICENSE)
 
-[npm-image]: https://img.shields.io/npm/v/ml-ml-reference-deconvolution.svg
-[npm-url]: https://www.npmjs.com/package/ml-ml-reference-deconvolution
+[npm-image]: https://img.shields.io/npm/v/ml-reference-deconvolution.svg
+[npm-url]: https://www.npmjs.com/package/ml-reference-deconvolution
 [ci-image]: https://github.com/mljs/ml-reference-deconvolution/workflows/Node.js%20CI/badge.svg?branch=main
 [ci-url]: https://github.com/mljs/ml-reference-deconvolution/actions?query=workflow%3A%22Node.js+CI%22
 [codecov-image]: https://img.shields.io/codecov/c/github/mljs/ml-reference-deconvolution.svg
 [codecov-url]: https://codecov.io/gh/mljs/ml-reference-deconvolution
-[download-image]: https://img.shields.io/npm/dm/ml-ml-reference-deconvolution.svg
-[download-url]: https://www.npmjs.com/package/ml-ml-reference-deconvolution
+[download-image]: https://img.shields.io/npm/dm/ml-reference-deconvolution.svg
+[download-url]: https://www.npmjs.com/package/ml-reference-deconvolution
