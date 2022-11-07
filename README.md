@@ -14,6 +14,7 @@ Reference deconvolution.
 ## Reference
 
 https://doi.org/10.1002/(SICI)1099-0534(2000)12:1<21::AID-CMR4>3.0.CO;2-R
+http://nmr-analysis.blogspot.com/2014/01/reference-deconvolution.html
 
 ## Usage
 
