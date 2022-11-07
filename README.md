@@ -22,14 +22,17 @@ import { referenceDeconvolution } from 'ml-reference-deconvolution';
 
 const result = referenceDeconvolution(
   { x, y },
-  { from, to },
   {
-    shape: {
-      kind: 'gaussian',
+    experimental: { fromTo: { fromIndex, toIndex } },
+    ideal: {
+      shape: {
+        kind: 'gaussian',
+        fwhm: 1,
+      },
     },
   },
 );
-// result is ...
+// {data: {x,y} + some other parameters ?}
 ```
 
 ## License
