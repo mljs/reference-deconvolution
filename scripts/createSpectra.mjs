@@ -4,12 +4,14 @@ import { predictProton, rangesToXY } from 'nmr-processing';
 import OCL from 'openchemlib';
 
 const structures = [
-  { label: 'benzene', smiles: 'c1ccccc1' },
+  { label: 'benzene', smiles: 'c1ccccc1', from: 7.3, to: 7.45 },
   {
     label: 'methylvinylether',
     smiles: 'COC=C',
+    from: 3.62,
+    to: 3.7,
   },
-  { label: 'toluene', smiles: 'c1ccccc1C' },
+  { label: 'toluene', smiles: 'c1ccccc1C', from: 2.22, to: 2.28 },
 ];
 
 const simulations = [
@@ -34,7 +36,6 @@ for (const structure of structures) {
   const ranges = (await predictProton(molecule)).ranges;
 
   for (const simulation of simulations) {
-    console.log(simulation.shape);
     const data = rangesToXY(ranges, {
       shape: simulation.shape,
     });
