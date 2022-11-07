@@ -1,0 +1,92 @@
+[
+  {
+    "filename": "benzene_gaussian_10_0_0.json",
+    "structure": {
+      "label": "benzene",
+      "smiles": "c1ccccc1"
+    },
+    "simulation": {
+      "shape": {
+        "kind": "gaussian",
+        "fwhm": 10
+      },
+      "shift": 0,
+      "height": 0
+    }
+  },
+  {
+    "filename": "benzene_gaussian_0.1_10_0.5.json",
+    "structure": {
+      "label": "benzene",
+      "smiles": "c1ccccc1"
+    },
+    "simulation": {
+      "shape": {
+        "kind": "gaussian",
+        "fwhm": 0.1
+      },
+      "shift": 10,
+      "height": 0.5
+    }
+  },
+  {
+    "filename": "methylvinylether_gaussian_10_0_0.json",
+    "structure": {
+      "label": "methylvinylether",
+      "smiles": "COC=C"
+    },
+    "simulation": {
+      "shape": {
+        "kind": "gaussian",
+        "fwhm": 10
+      },
+      "shift": 0,
+      "height": 0
+    }
+  },
+  {
+    "filename": "methylvinylether_gaussian_0.1_10_0.5.json",
+    "structure": {
+      "label": "methylvinylether",
+      "smiles": "COC=C"
+    },
+    "simulation": {
+      "shape": {
+        "kind": "gaussian",
+        "fwhm": 0.1
+      },
+      "shift": 10,
+      "height": 0.5
+    }
+  },
+  {
+    "filename": "toluene_gaussian_10_0_0.json",
+    "structure": {
+      "label": "toluene",
+      "smiles": "c1ccccc1C"
+    },
+    "simulation": {
+      "shape": {
+        "kind": "gaussian",
+        "fwhm": 10
+      },
+      "shift": 0,
+      "height": 0
+    }
+  },
+  {
+    "filename": "toluene_gaussian_0.1_10_0.5.json",
+    "structure": {
+      "label": "toluene",
+      "smiles": "c1ccccc1C"
+    },
+    "simulation": {
+      "shape": {
+        "kind": "gaussian",
+        "fwhm": 0.1
+      },
+      "shift": 10,
+      "height": 0.5
+    }
+  }
+]
