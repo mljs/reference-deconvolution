@@ -3,10 +3,6 @@ import { xMaxValue, hilbertTransform } from 'ml-spectra-processing';
 import { getSignalReference } from './utilities/getSignalReference';
 import * as lib from 'ml-fft';
 
-/**
- * My module
- * @returns A very important number
- */
 export function referenceDeconvolution(data: Data, options: Options = {}) {
   const {
     reference = { from: 0, to: 0.5 },
@@ -32,7 +28,7 @@ export function referenceDeconvolution(data: Data, options: Options = {}) {
   const idealSignal = Array.from(generatedSpectrum.y);
   const referenceSignal = getSignalReference(reference, x, y);
   const fExpIm = hilbertTransform(y, { inClockwise: false });
-  const fIdealIm = hilbertTransform(idealSignal, { inClockwise: false});
+  const fIdealIm = hilbertTransform(idealSignal, { inClockwise: false });
   const fRefIm = hilbertTransform(referenceSignal, { inClockwise: false });
 
   return 42;
