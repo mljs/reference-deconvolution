@@ -1,6 +1,6 @@
 import { writeFileSync } from 'fs';
 
-import { predictProton, rangesToXY } from 'nmr-processing';
+import { predictProton, signalsToXY } from 'nmr-processing';
 import OCL from 'openchemlib';
 
 const structures = [
@@ -17,13 +17,9 @@ const structures = [
 const simulations = [
   {
     shape: { kind: 'gaussian', fwhm: 10 },
-    shift: 0, // in pixels
-    height: 0,
   },
   {
     shape: { kind: 'gaussian', fwhm: 0.1 },
-    shift: 10, // in pixels
-    height: 0.5,
   },
 ];
 
@@ -33,21 +29,12 @@ const entries = [];
 for (const structure of structures) {
   const molecule = Molecule.fromSmiles(structure.smiles);
 
-  const ranges = (await predictProton(molecule)).ranges;
+  const signals = (await predictProton(molecule)).signals;
 
   for (const simulation of simulations) {
-    const data = rangesToXY(ranges, {
+    const data = signalsToXY(signals, {
       shape: simulation.shape,
     });
-
-    if (simulation.shift) {
-      const absShift = Math.abs(simulation.shift);
-      const newY = data.y.slice(0);
-      for (let i = absShift; i < data.x.length - absShift; i++) {
-        newY[i] += data.y[i + simulation.shift] * simulation.height;
-      }
-      data.y = newY;
-    }
 
     const name = `${structure.label}_${simulation.shape.kind}_${simulation.shape.fwhm}_${simulation.shift}_${simulation.height}.json`;
     entries.push({ filename: name, structure, simulation });
