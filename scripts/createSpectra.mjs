@@ -16,10 +16,10 @@ const structures = [
 
 const simulations = [
   {
-    shape: { kind: 'gaussian', fwhm: 10 },
+    shape: { kind: 'gaussian', fwhm: 2 },
   },
   {
-    shape: { kind: 'gaussian', fwhm: 0.1 },
+    shape: { kind: 'gaussian', fwhm: 0.5 },
   },
 ];
 
@@ -34,7 +34,7 @@ for (const structure of structures) {
   for (const simulation of simulations) {
     const data = signalsToXY(signals, {
       shape: simulation.shape,
-      lineWidth: simulation.shape.fwhm
+      lineWidth: simulation.shape.fwhm,
     });
 
     const name = `${structure.label}_${simulation.shape.kind}_${simulation.shape.fwhm}.json`;
