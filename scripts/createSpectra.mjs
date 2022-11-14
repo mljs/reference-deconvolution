@@ -36,7 +36,7 @@ for (const structure of structures) {
       shape: simulation.shape,
     });
 
-    const name = `${structure.label}_${simulation.shape.kind}_${simulation.shape.fwhm}_${simulation.shift}_${simulation.height}.json`;
+    const name = `${structure.label}_${simulation.shape.kind}_${simulation.shape.fwhm}.json`;
     entries.push({ filename: name, structure, simulation });
     writeFileSync(
       new URL(`../data/${name}`, import.meta.url),
