@@ -34,6 +34,7 @@ for (const structure of structures) {
   for (const simulation of simulations) {
     const data = signalsToXY(signals, {
       shape: simulation.shape,
+      lineWidth: simulation.shape.fwhm
     });
 
     const name = `${structure.label}_${simulation.shape.kind}_${simulation.shape.fwhm}.json`;
