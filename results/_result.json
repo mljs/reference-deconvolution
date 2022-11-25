@@ -1,0 +1,20 @@
+[
+  {
+    "filename": "../data/toluene_gaussian_2.json",
+    "structure": {
+      "label": "Spectrum toluene_gaussian"
+    }
+  },
+  {
+    "filename": "../results/deconv_toluene_gaussian.json",
+    "structure": {
+      "label": "Result toluene_gaussian diff = 1968261896.43"
+    }
+  },
+  {
+    "filename": "../data/toluene_gaussian_0.5.json",
+    "structure": {
+      "label": "Target toluene_gaussian"
+    }
+  }
+]

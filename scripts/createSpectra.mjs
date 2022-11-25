@@ -33,6 +33,7 @@ for (const structure of structures) {
 
   for (const simulation of simulations) {
     const data = signalsToXY(signals, {
+      // @ts-ignore
       shape: simulation.shape,
       lineWidth: simulation.shape.fwhm,
     });
@@ -43,6 +44,7 @@ for (const structure of structures) {
       new URL(`../data/${name}`, import.meta.url),
       JSON.stringify(
         { data, simulation },
+        // @ts-ignore
         (key, value) => (ArrayBuffer.isView(value) ? Array.from(value) : value),
         2,
       ),

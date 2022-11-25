@@ -1,0 +1,20 @@
+[
+  {
+    "filename": "../results/deconv_benzene_gaussian.json",
+    "structure": {
+      "label": "Result benzene_gaussian diff = 0.00"
+    }
+  },
+  {
+    "filename": "../data/benzene_gaussian_0.5.json",
+    "structure": {
+      "label": "Target benzene_gaussian"
+    }
+  },
+  {
+    "filename": "../data/benzene_gaussian_2.json",
+    "structure": {
+      "label": "Spectrum benzene_gaussian"
+    }
+  }
+]

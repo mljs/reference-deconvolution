@@ -1,0 +1,77 @@
+<!-- showing graph using jsGraph -->
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <script language="javascript" src="../data/jsgraph.min.js"></script>
+  </head>
+
+  <body>
+    <div id="charts"></div>
+    <script>
+      const options = {
+        width: 1000,
+        height: 400,
+        plugins: {
+          zoom: {
+            zoomMode: 'x',
+          },
+        },
+        mouseActions: [
+          {
+            plugin: 'zoom',
+            shift: false,
+            ctrl: false,
+          },
+          {
+            plugin: 'zoom',
+            type: 'mousewheel',
+            options: {
+              direction: 'y',
+            },
+          },
+          {
+            plugin: 'zoom',
+            type: 'dblclick',
+            options: {
+              mode: 'total',
+            },
+          },
+        ],
+      };
+      const target = document.getElementById('charts');
+      doAll();
+      async function doAll() {
+        let response = await fetch('./_result.json');
+        let entries = await response.json();
+        for (let entry of entries) {
+          await createGraph(entry);
+        }
+      }
+
+      async function createGraph(entry) {
+        let response = await fetch(entry.filename);
+        let { data } = await response.json();
+        const h1 = document.createElement('H1');
+        h1.innerHTML = entry.structure.label;
+        target.appendChild(h1);
+        const div = document.createElement('DIV');
+        div.setAttribute('id', entry.filename);
+        target.appendChild(div);
+
+        let graph = new Graph(entry.filename, options);
+        graph.resize(options.width, options.height); // Resizes the container
+        let waveForm = Graph.newWaveform();
+        waveForm.setData(data.y, data.x);
+        graph
+          .newSerie('line serie', {}, 'line') // Creates a new serie
+          .autoAxis() // Assigns axes
+          .setWaveform(waveForm)
+          .setLineColor('blue')
+          .getYAxis()
+          .setScientific(true);
+        graph.draw();
+      }
+    </script>
+  </body>
+</html>

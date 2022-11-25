@@ -1,5 +1,7 @@
+import fs from 'fs';
+import { join } from 'path';
 import { generateSpectrum } from 'spectrum-generator';
-import { xMaxValue, hilbertTransform, reimFFT } from 'ml-spectra-processing';
+import { xMaxValue, xHilbertTransform, reimFFT } from 'ml-spectra-processing';
 import { getSignalReference } from './utilities/getSignalReference';
 
 /**
@@ -9,42 +11,42 @@ import { getSignalReference } from './utilities/getSignalReference';
 export function referenceDeconvolution(data: DataXY, options: Options = {}) {
   const {
     referenceRange = { from: 0, to: 0.5 },
+    idealSpectrumPeak = { x: [], y: [] },
     ideal = {
       shape: {
         kind: 'gaussian',
-        fwhm: 1,
-        peakWidth: 0.001,
+        fwhm: 0.5,
       },
     },
+    // ideal,
   } = options;
 
-  const { x, reExperimentalSpectrum } = data;
+  const { x, y } = data;
+  const reExperimentalSpectrum = [...y];
 
-  const reReferenceSpectrumPeak = getSignalReference(
-    referenceRange,
-    x,
-    reExperimentalSpectrum,
-  );
-  const idealSpectrumPeak = generateSpectrum(
-    [{ x: 0, y: xMaxValue(reReferenceSpectrumPeak) }],
-    {
-      generator: {
-        from: x[0],
-        to: x[x.length - 1],
-        nbPoints: x.length,
-        peakWidthFct: () => ideal.shape.peakWidth,
-      },
-    },
-  );
+  const reReferenceSpectrumPeak = getSignalReference(referenceRange, x, y);
+
+  // const idealSpectrumPeak = generateSpectrum(
+  //   [{ x: 3.667, y: xMaxValue(reReferenceSpectrumPeak) }],
+  //   {
+  //     generator: {
+  //       from: x[0],
+  //       to: x[x.length - 1],
+  //       nbPoints: x.length,
+  //       shape: ideal.shape,
+  //       peakWidthFct: () => 0.003,
+  //     },
+  //   },
+  // );
 
   const reIdealSpectrumPeak = Array.from(idealSpectrumPeak.y);
-  const imExperimentalSpectrum = hilbertTransform(reExperimentalSpectrum, {
+  const imExperimentalSpectrum = xHilbertTransform(reExperimentalSpectrum, {
     inClockwise: false,
   });
-  const imIdealSpectrumPeak = hilbertTransform(reIdealSpectrumPeak, {
+  const imIdealSpectrumPeak = xHilbertTransform(reIdealSpectrumPeak, {
     inClockwise: false,
   });
-  const imReferenceSpectrumPeak = hilbertTransform(reReferenceSpectrumPeak, {
+  const imReferenceSpectrumPeak = xHilbertTransform(reReferenceSpectrumPeak, {
     inClockwise: false,
   });
 
@@ -70,40 +72,39 @@ export function referenceDeconvolution(data: DataXY, options: Options = {}) {
     const realQuotient =
       (reExperimentalFid[i] * reReferencePeakFid[i] +
         imExperimentalFid[i] * imReferencePeakFid[i]) /
-      (reReferencePeakFid[i] ** 2 + reReferencePeakFid[i] ** 2);
+      (reReferencePeakFid[i] ** 2 + imReferencePeakFid[i] ** 2);
 
     const imagQuotient =
-      (imExperimentalFid[i] * reReferencePeakFid[i] +
+      (imExperimentalFid[i] * reReferencePeakFid[i] -
         reExperimentalFid[i] * imReferencePeakFid[i]) /
-      (reReferencePeakFid[i] ** 2 + reReferencePeakFid[i] ** 2);
+      (reReferencePeakFid[i] ** 2 + imReferencePeakFid[i] ** 2);
 
     reCompensatedFid[i] =
       realQuotient * reIdealPeakFid[i] - imagQuotient * imIdealPeakFid[i];
     imCompensatedFid[i] =
       realQuotient * imIdealPeakFid[i] + imagQuotient * reIdealPeakFid[i];
   }
-  const { re: reCompensatedSpectrum, im: imCompensatedSpectrum } = reimFFT(
+  let { re: reCompensatedSpectrum, im: imCompensatedSpectrum } = reimFFT(
     { re: reCompensatedFid, im: imCompensatedFid },
-    { inverse: true },
+    { inverse: false },
   );
+
   return {
-    re: reCompensatedSpectrum,
-    im: imCompensatedSpectrum
+    x,
+    y: reCompensatedSpectrum,
+    // re: reCompensatedSpectrum,
+    // im: imCompensatedSpectrum,
   };
 }
 
 interface DataXY {
   x: number[];
-  reExperimentalSpectrum: number[];
+  y: number[];
 }
 
 interface Options {
+  reference?: DataXY;
   referenceRange?: { from: number; to: number };
-  ideal?: {
-    shape: {
-      kind: string;
-      fwhm: number;
-      peakWidth: number;
-    };
-  };
+  idealSpectrumPeak?: DataXY;
+  ideal?: any;
 }
